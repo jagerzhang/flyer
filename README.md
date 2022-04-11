@@ -5,6 +5,32 @@ Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员
 
 ![pigeon](static/logo.png)
 
+## 性能测试
+单核单进程模式，Flyer空载性能在8k+QPS，基本可以满足绝大部分运维场景。压测方式如下：
+
+### 启动服务
+```
+docker run -d \
+  --net=host \
+  --name flyer_bench \
+  --cpus 1 \
+  -e flyer_workers=1  \
+  -e flyer_log_level=error \
+  jagerzhang/flyer:v1.0
+```
+### 启动压测
+```shell
+[root@localhost ~]# ./wrk -c 800 -t 10 http://127.0.0.1:8080/health_check
+Running 10s test @ http://127.0.0.1:8080/health_check/health_check
+  10 threads and 800 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    87.78ms   19.46ms 430.79ms   90.17%
+    Req/Sec     0.90k   252.02     1.62k    81.85%
+  89274 requests in 10.03s, 13.62MB read
+Requests/sec:   8901.47
+Transfer/sec:      1.36MB
+```
+
 ## 快速上手
 ### 服务依赖
 - 运行环境：Python 3.6.8 或更高版本
