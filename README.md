@@ -1,5 +1,4 @@
 ## Flyer: 轻量级 API 开发框架
-[TOC]
 
 ## 项目介绍
 Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员快速开发运维业务接口。
@@ -50,12 +49,10 @@ flyer:test \
 # 安装Python3和基础组件
 yum install -y python3 python3-devel python3-setuptools make snappy-devel gcc-c++
 
-# 安装Python基础组件
-pip3 install numpy protobuf Cython PyYAML aiohttp portalocker python-snappy netifaces
-
 # 安装 Flyer 依赖的 Python 插件
-pip3 install --force-reinstall --ignore-installed --no-cache-dir -r requirements.txt
+pip3 install --no-cache-dir -r requirements.txt 
 ```
+注：以上为Centos环境的安装步骤，其他系统请参考修改命令即可。
 
 #### 启动服务
 ```shell
