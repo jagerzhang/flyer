@@ -1,0 +1,12 @@
+FROM python:3.8-alpine3.13
+LABEL maintainer="Jagerzhang<im@zhang.ge>"
+LABEL description="Flyer：基于 FastAPI 的 API 开发框架."
+WORKDIR /flyer
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache make automake gcc g++ python3-dev
+
+COPY requirements.txt /tmp/
+RUN pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple

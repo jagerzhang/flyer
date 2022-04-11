@@ -1,0 +1,17 @@
+[run]
+omit =
+    # 排除老接口
+    */old/*
+    # 排除入口测试文件
+    *main.py
+    # 排除框架暂时未启用的文件
+    */utils/http_requests.py
+    */utils/data.py
+    */utils/common.py
+    */utils/zhiyan.py
+    # 排除空的预留文件
+    */api/base/settings.py
+    # 排除无代码文件
+    */api/demo/settings.py
+    */api/demo/*__init__.py
+    */utils/__init__.py

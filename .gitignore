@@ -1,0 +1,11 @@
+__pycache__
+logs/*
+*.log*
+*.pyc
+*.lock
+env_ext.sh
+.temp/
+.vscode/
+.coverage
+covhtml
+coverage.xml
