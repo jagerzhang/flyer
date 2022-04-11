@@ -16,8 +16,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.cloud.tencent.com/g' /etc/apk/repos
     apk add --no-cache make automake gcc g++ python3-dev
 
 COPY requirements.txt /tmp/
-RUN pip3 install --upgrade pip -i -i https://mirrors.cloud.tencent.com/pypi/simple  && \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt -i -i https://mirrors.cloud.tencent.com/pypi/simple
+RUN pip3 install --upgrade pip --index-url https://mirrors.cloud.tencent.com/pypi/simple  && \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt --index-url https://mirrors.cloud.tencent.com/pypi/simple
 
 COPY . .
 RUN sed -i "s/RELEASE_DATE/$(date '+%Y-%m-%d %H:%M')/" docker/docker-entrypoint.sh
