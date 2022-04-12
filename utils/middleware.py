@@ -46,18 +46,19 @@ class RouteMiddleWare(APIRoute):
                 response_body = {"response_str": ""}
 
         if isinstance(response_body, dict) and isinstance(request_body, dict):
-            request_body.update(response_body)
+            response_body.update(request_body)
 
-            if "retCode" not in request_body:
-                request_body["retCode"] = response.status_code
+            if "retCode" not in response_body:
+                response_body["retCode"] = response.status_code
 
-            if "retInfo" not in request_body:
-                request_body["retInfo"] = str(
+            if "retInfo" not in response_body:
+                response_body["retInfo"] = str(
                     response_body.get("response_str"))
 
         response_body.update(kwargs)
 
-        config.logger.info(response_body)
+        if eval(config.env_list.get("flyer_access_log_json", "True")):
+            config.logger.info(json.dumps(response_body))
 
     def get_route_handler(self):
         original_route_handler = super().get_route_handler()
