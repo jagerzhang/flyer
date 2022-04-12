@@ -147,17 +147,25 @@ Flyer 基于 FastAPI 框架，所以自带了 reDoc 和 SwaggerUI，完全实现
 
 ### 环境变量
 Flyer 支持通过环境变量来修改各种配置。
-
-**七彩石中需配置以下变量，若不启用七彩石则需要写到环境变量**
+**基础变量**
 - `flyer_host`: 接口绑定IP，默认为 0.0.0.0
 - `flyer_port`：接口绑定端口，默认为 8080
 - `flyer_base_url`：服务地址前缀，默认为 /flyer
 - `flyer_version`：服务版本，当前为 v1
 - `flyer_reload`：接口热加载，用于开发环境，默认为 True
-- `flyer_workers`：工作线程数量，默认为 1
+- `flyer_workers`：工作进程数量，默认为 1
+- `flyer_threads`：工作线程数量，默认为 5
+- `flyer_worker_connections`：最大客户端并发数量，默认为1000
+- `flyer_enable_max_requests`：打开自动重启机制，即请求一定数量后进程自动重启，可以缓解内存泄漏问题
+- `flyer_max_requests`：重新启动之前，工作将处理的最大请求数。默认值为0
+- `flyer_max_requests_jitter`：要添加到max_requests的最大抖动。抖动将导致每个工作的重启被随机化，这是为了避免所有工作被重启。
+- `flyer_timeout`：超过这么多秒后工作将被杀掉，并重新启动。默认为60秒
+- `flyer_graceful_timeout`：优雅退出时间，默认为10，收到重启信号后，将等待指定时长才（或强制）退出
+- `flyer_keepalive`：在keep-alive连接上等待请求的秒数，默认为5
 - `flyer_log_level`：定义日志级别，debug/info/warn/error，默认为 info
-- `flyer_access_log`：是否记录访问日志，True/False，默认为 True
-- `FORWARDED_ALLOW_IPS`： 信任的代理IP，默认为 *，全部信任 
+- `flyer_access_log`：是否记录请求日志，True/False，默认为 True
+- `flyer_access_logfile`：定义请求日志文件的位置，默认为-，即输出到容器标准输出
+注：更多gunicorn参数可以通过传参给`/run.sh`来覆盖或追加。
 
 **需要用到`Redis`请添加如下配置：**
 - `flyer_redis_host`: Redis 服务IP，默认 localhost
