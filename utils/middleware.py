@@ -2,6 +2,7 @@
 import json
 import time
 import uuid
+import resource
 import traceback
 from fastapi.routing import APIRoute
 from fastapi import Request, Response
@@ -65,7 +66,9 @@ class RouteMiddleWare(APIRoute):
 
         async def recorder(request: Request) -> Response:
             start_time = time.perf_counter()
-
+            # 计算线程内存占用
+            memory_usage_begin = resource.getrusage(
+                resource.RUSAGE_THREAD).ru_maxrss
             # 对接NGate网关记录客户端ID
             client_id = request.headers.get("x-client-id", "")
             request_id = request.headers.get("x-request-id")
@@ -143,10 +146,15 @@ X-Request-ID:{request_id}\nTraceInfo: {error_str}\nBody: {request_body}"
                     config.alarm.report_string(error)
                     response = JSONResponse(content=result)
 
-            # 计算耗时插入自定义头部
+            # 插入自定义头部
+            memory_usage_end = resource.getrusage(
+                resource.RUSAGE_THREAD).ru_maxrss
+
+            memory_usage = memory_usage_begin - memory_usage_end
             total_lasting = int((time.perf_counter() - start_time) * 1000)
             response.headers["X-Lasting-Time"] = str(total_lasting)
             response.headers["X-Request-ID"] = request_id
+            response.headers["X-Memory-Usage"] = f"{memory_usage}KB"
             # 防御 XSS 反射型漏洞
             response.headers["X-Content-Type-Options"] = "nosniff"
 
@@ -156,6 +164,7 @@ X-Request-ID:{request_id}\nTraceInfo: {error_str}\nBody: {request_body}"
                 timeStamp=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                 latency=total_lasting,
                 clientIp=client_ip,
+                memoryUsage=memory_usage,
                 logId=request_id,
                 Url=str(request.url),
                 clientId=str(client_id),
