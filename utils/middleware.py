@@ -150,7 +150,7 @@ X-Request-ID:{request_id}\nTraceInfo: {error_str}\nBody: {request_body}"
             memory_usage_end = resource.getrusage(
                 resource.RUSAGE_THREAD).ru_maxrss
 
-            memory_usage = memory_usage_begin - memory_usage_end
+            memory_usage = memory_usage_end - memory_usage_begin
             total_lasting = int((time.perf_counter() - start_time) * 1000)
             response.headers["X-Lasting-Time"] = str(total_lasting)
             response.headers["X-Request-ID"] = request_id
