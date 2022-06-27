@@ -8,8 +8,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from utils.common import CommonFunc
 from api import settings as config
 
-common_func = CommonFunc()
-
 
 class RedisPool():
     """Redis 操作类
@@ -37,7 +35,7 @@ class RedisPool():
         finally:
             super(RedisPool, self).__init__()
 
-    @common_func.async_func
+    @CommonFunc.async_func
     def set(self, key_name, key_value, **kwargs):
         """设置缓存键值
         """
@@ -68,7 +66,7 @@ class RedisPool():
             else:
                 return False
 
-    @common_func.async_func
+    @CommonFunc.async_func
     def delete(self, key_name):
         """删除指定缓存
         """

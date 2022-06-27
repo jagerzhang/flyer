@@ -7,9 +7,6 @@ https://github.com/tiangolo/fastapi/issues/81#issuecomment-473677039
 import os
 import sys
 from loguru import logger
-from utils.common import CommonFunc
-
-common_func = CommonFunc()
 
 
 def log_init(file_log_level, console_log_level):

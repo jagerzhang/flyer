@@ -6,7 +6,7 @@
 # 可开启 Kafka 支持
 # from utils.data import Producer
 # 公共方法
-from utils.common import CommonFunc  # NOQA
+from utils.common import CommonFunc as common_func  # NOQA
 # 引入智研上报方法
 from utils.logger import log_init
 # 加强版 requests，支持异常重试、日志
@@ -14,8 +14,6 @@ from utils.http_requests import requests  # pylint: disable=unused-import
 # 全局错误码
 from utils import ierror  # pylint: disable=unused-import
 
-# 公共方法
-common_func = CommonFunc()
 # 主机 IP 变量
 host_ip = common_func.get_host_ip()
 # 获取环境配置

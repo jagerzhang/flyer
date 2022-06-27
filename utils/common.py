@@ -6,7 +6,6 @@ import json
 import os
 import re
 import socket
-import binascii
 import struct
 import sys
 from threading import Thread
@@ -14,8 +13,9 @@ from IPy import IP
 from api import settings as config
 
 
-class CommonFunc():
-    def get_client_ip(self, request):
+class CommonFunc:
+    @staticmethod
+    def get_client_ip(request):
         """get the client IPAddress by request
         """
         try:
@@ -31,7 +31,8 @@ class CommonFunc():
 
         return client_ip
 
-    def get_host_ip(self):
+    @staticmethod
+    def get_host_ip():
         """get the host IPAddress by socket
         """
         try:
@@ -44,7 +45,8 @@ class CommonFunc():
 
         return host_ip
 
-    def get_ip_by_interface(self, ifname):
+    @staticmethod
+    def get_ip_by_interface(ifname):
         """获取指定网卡的IP地址
         """
         ifname = ifname[:15]
@@ -59,7 +61,8 @@ class CommonFunc():
                 struct.pack("256s", ifname))[20:24])
         return ip_addr
 
-    def get_env_list(self, prefix=None, replace=True):
+    @staticmethod
+    def get_env_list(prefix=None, replace=True):
         """ 获取环境变量
             @ prefix： 指定目标变量的前缀
             @ replace：指定前缀后，键名是否去掉前缀
@@ -80,7 +83,8 @@ class CommonFunc():
         else:
             return dict(env_dict)
 
-    def filter_msg_ip(self, client_ip, default_ip):
+    @staticmethod
+    def filter_msg_ip(client_ip, default_ip):
         """ filter msg ip
         """
         # 如果客户端IP来自容器私有网络或公网代理IP，则写死一个合法IP
@@ -102,7 +106,8 @@ class CommonFunc():
         else:
             return client_ip
 
-    def check_json_format(self, raw_msg):
+    @staticmethod
+    def check_json_format(raw_msg):
         """
         用于判断一个字符串是否符合Json格式
         :param self:
@@ -118,7 +123,8 @@ class CommonFunc():
         else:
             return False
 
-    def async_func(self, func):
+    @staticmethod
+    def async_func(func):
         """异步执行函数
         """
         def wrapper(*args, **kwargs):
@@ -127,7 +133,8 @@ class CommonFunc():
 
         return wrapper
 
-    def split_list(self, src_list, length=3, tmp_list=None):
+    @staticmethod
+    def split_list(src_list, length=3, tmp_list=None):
         """列表按长度切分
         """
         if tmp_list is None:
@@ -139,31 +146,45 @@ class CommonFunc():
 
         else:
             tmp_list.append(src_list[:length])
-            return self.split_list(src_list[length:], length, tmp_list)
+            return CommonFunc.split_list(src_list[length:], length, tmp_list)
 
-    def is_base64(self, string):
-        """判断是不是Base64加密
+    @staticmethod
+    def is_base64(string):
+        """
+        判断是不是Base64加密
         """
         try:
-            if re.match(r"^b'", string):
-                return base64.b64decode(string[2:-1], validate=True)
+            base64.b64decode(string)
+            return True
+        except Exception:  # pylint: disable=broad-except
+            pass
 
-            return base64.b64decode(string, validate=True)
+        try:
+            base64.b64decode(string[2:-1])
+            return True
 
-        except binascii.Error:
-            return False
+        except Exception:  # pylint: disable=broad-except
+            pass
 
-    def base64decode(self, content):
+        return False
+
+    @staticmethod
+    def base64decode(content):
         """Base64解码，兼容不同版本客户端
         """
-        resp = self.is_base64(content)
+        if not CommonFunc.is_base64(content):
+            return content
 
-        if resp:
-            return resp
+        # for Python3 Client
+        if re.match(r"^b'", content):
+            return base64.b64decode(content[2:-1])
 
-        return content
+        # for Python2 Client
+        else:
+            return base64.b64decode(content)
 
-    def is_ipaddress(self, address):
+    @staticmethod
+    def is_ipaddress(address):
         """IP地址校验
         """
         try:
@@ -173,7 +194,8 @@ class CommonFunc():
             config.logger.warning(error)
             return False
 
-    def string_to_list(self, content, length=2048, charact="utf-8"):
+    @staticmethod
+    def string_to_list(content, length=2048, charact="utf-8"):
         """字符串按指定编码长度切分(默认UTF-8)
         """
         if charact:
@@ -196,7 +218,8 @@ class CommonFunc():
 
         return split_list
 
-    def filter_none_item(self, src_list, verify=False):
+    @staticmethod
+    def filter_none_item(src_list, verify=False):
         """去掉列表中的空元素和重复元素
         """
         if isinstance(src_list, list):
@@ -218,7 +241,8 @@ class CommonFunc():
 
         return src_list
 
-    def hidden_secret(self, content, length=None, order=1):
+    @staticmethod
+    def hidden_secret(content, length=None, order=1):
         """隐藏指定长度敏感字符串
         :param  content, 原始字符串
         :paramlength，需要被替换的字符串长度，不传入时替换60%
@@ -242,7 +266,8 @@ class CommonFunc():
         else:
             return f"{hidden_str}{content[int(len(content) - length):]}"
 
-    def get_md5(self, content):
+    @staticmethod
+    def get_md5(content):
         """ 计算MD5
         """
         m = hashlib.md5()

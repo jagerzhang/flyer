@@ -5,10 +5,7 @@ from urllib3.exceptions import ResponseError
 from urllib3.exceptions import NewConnectionError
 from requests import session
 from retrying import retry
-from utils.common import CommonFunc
 from api import settings as config
-
-common_func = CommonFunc()
 
 
 def retry_by_except(exception):
