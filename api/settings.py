@@ -24,6 +24,10 @@ console_log_level = env_list.get("flyer_console_log_level", "info").upper()
 file_log_level = env_list.get("flyer_file_log_level", "debug").upper()
 logger = log_init(file_log_level, console_log_level)
 
+logger.info("已加载环境变量如下：")
+for k, v in env_list.items():
+    logger.info(f"{k}: {v}")
+
 # 基本配置
 version = env_list.get("flyer_version", "v1")
 base_url = env_list.get("flyer_base_url", "/flyer")
