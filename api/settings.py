@@ -40,9 +40,9 @@ release_date = env_list.get("flyer_release_date",
 API_TITLE = "Flyer Demo"
 DESCRIPTION = f"中文名称：Flyer API 框架演示项目<br>\
 功能说明：用于演示 Flyer API 开发框架的示例项目<br>\
-框架源码：<a href='https://git.woa.com/nops/flyer' target='_blank'>Git</a><br>\
-接口文档：<a href='{prefix}/redoc' target='_blank'>ReDoc</a><br>\
-快速上手：<a href='{prefix}/docs' target='_blank'>SwaggerUI</a><br>\
+框架源码：[Git](https://github.com/jagerzhang/flyer)<br>\
+接口文档：[ReDoc]({prefix}/redoc)<br>\
+快速上手：[SwaggerUI]({prefix}/docs)<br>\
 技术支持：{developer}<br>\
 最新发布：{release_date}"
 
