@@ -62,28 +62,6 @@ class CommonFunc:
         return ip_addr
 
     @staticmethod
-    def get_env_list(prefix=None, replace=True):
-        """ 获取环境变量
-            @ prefix： 指定目标变量的前缀
-            @ replace：指定前缀后，键名是否去掉前缀
-        """
-        env_dict = os.environ
-
-        if prefix:
-            env = {}
-            for key in env_dict:
-                if prefix in key:
-                    if replace:
-                        env[key.replace(prefix, "")] = env_dict[key]
-                    else:
-                        env[key] = env_dict[key]
-
-            return env
-
-        else:
-            return dict(env_dict)
-
-    @staticmethod
     def filter_msg_ip(client_ip, default_ip):
         """ filter msg ip
         """
