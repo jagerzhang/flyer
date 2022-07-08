@@ -20,7 +20,7 @@ def authorize(credentials: HTTPBasicCredentials = Depends(security)):
                 app.include_router(demo_api, prefix=f"{config.base_url}/{config.version}")
 
             改为：
-                if int(config.env_list.get("flyer_auth_enable", 0)) == 1:
+                if int(config.env.get("flyer_auth_enable", 0)) == 1:
                     app.include_router(demo_api,
                                     prefix=f"{config.base_url}/{config.version}",
                                     dependencies=[Depends(authorize)])
@@ -32,9 +32,9 @@ def authorize(credentials: HTTPBasicCredentials = Depends(security)):
 
     """
     is_user_ok = secrets.compare_digest(credentials.username,
-                                        config.env_list.get("flyer_auth_user"))
+                                        config.env.get("flyer_auth_user"))
     is_pass_ok = secrets.compare_digest(credentials.password,
-                                        config.env_list.get("flyer_auth_pass"))
+                                        config.env.get("flyer_auth_pass"))
     if not (is_user_ok and is_pass_ok):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Incorrect user or password.",

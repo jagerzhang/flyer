@@ -33,7 +33,7 @@ def create_app():
     app.include_router(api_base)
 
     # 是否开启鉴权
-    if int(config.env_list.get("flyer_auth_enable", 0)) == 1:
+    if int(config.env.get("flyer_auth_enable", 0)) == 1:
         app.include_router(demo_api,
                            prefix=f"{config.base_url}/{config.version}",
                            dependencies=[Depends(authorize)])

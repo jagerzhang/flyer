@@ -70,15 +70,15 @@ class CommonFunc:
         env_dict = os.environ
 
         if prefix:
-            env_list = {}
+            env = {}
             for key in env_dict:
                 if prefix in key:
                     if replace:
-                        env_list[key.replace(prefix, "")] = env_dict[key]
+                        env[key.replace(prefix, "")] = env_dict[key]
                     else:
-                        env_list[key] = env_dict[key]
+                        env[key] = env_dict[key]
 
-            return env_list
+            return env
 
         else:
             return dict(env_dict)

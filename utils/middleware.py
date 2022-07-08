@@ -58,7 +58,7 @@ class RouteMiddleWare(APIRoute):
 
         response_body.update(kwargs)
 
-        if eval(config.env_list.get("flyer_access_log_json", "True")):
+        if eval(config.env.get("flyer_access_log_json", "True")):
             config.logger.info(json.dumps(response_body))
 
     def get_route_handler(self):
