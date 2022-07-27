@@ -141,7 +141,7 @@ cd flyer
 ### 接口文档
 Flyer 基于 FastAPI 框架，所以自带了 reDoc 和 SwaggerUI，完全实现代码即文档的开发方式，非常方便。
 - ReDoc: `http://<IP>:8080/flyer/v1/redoc`
-- SwaggerUI: `http://<IP>:8080/flyer/v1/dcos`
+- SwaggerUI: `http://<IP>:8080/flyer/v1/docs`
 
 注：Url 路径中的 `flyer` 和 `v1` 可以通过环境变量`flyer_base_url`和`flyer_version`来定制。
 
