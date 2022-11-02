@@ -55,7 +55,7 @@ def create_service(app: FastAPI):
     @app.on_event("startup")
     def set_default_executor():  # pylint: disable=unused-variable
         max_threads = int(os.environ.get("THREADS", 5))
-        config.logger.info(f"FastAPI Threads Number: {max_threads}")
+        config.logger.info(f"The Number of Threads per Worker: {max_threads}")
         loop = asyncio._get_running_loop()
         loop.set_default_executor(ThreadPoolExecutor(max_workers=max_threads))
 
