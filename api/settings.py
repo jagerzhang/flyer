@@ -17,8 +17,6 @@ from utils import ierror  # pylint: disable=unused-import
 
 # 主机 IP 变量
 host_ip = common_func.get_host_ip()
-# 获取环境配置
-env = common_func.get_env_list()
 
 # 日志配置
 console_log_level = env.get("flyer_console_log_level", "info").upper()
