@@ -21,12 +21,12 @@ docker run -d \
     -e flyer_reload=0 \
     -e flyer_preload=0 \
     -e flyer_access_log=0 \
-    -e flyer_threads=1 open_flyer:dev
+    -e flyer_threads=1 jagerzhang/flyer:v1.1
 ```
 ### 启动压测
 ```shell
-[root@localhost ~]# ./wrk -c 800 -t 10 http://127.0.0.1:8888/health_check
-Running 10s test @ http://127.0.0.1:8888/health_check/health_check
+[root@localhost ~]# ./wrk -c 800 -t 10 http://127.0.0.1:8888/flyer/v1/health_check
+Running 10s test @ http://127.0.0.1:8888/flyer/v1/health_check
   10 threads and 800 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
     Latency    87.78ms   19.46ms 430.79ms   90.17%

@@ -6,8 +6,6 @@ WORKDIR /flyer
 
 ENV TZ=Asia/Shanghai \
     TERM=linux \
-    LANG=zh_CN.UTF-8 \
-    LC_ALL=zh_CN.UTF-8 \
     flyer_host=0.0.0.0 \
     flyer_port=8080 \
     flyer_reload=1 \

@@ -7,28 +7,8 @@ from api import settings as config
 router = APIRouter()
 
 
-@router.head("/", include_in_schema=False)
-def check_health():  # NOQA
-    return JSONResponse(status_code=200)
-
-
-@router.head("/health_check",
-             include_in_schema=False,
-             response_model=HealthCheckResponse)
-@router.post("/health_check",
-             include_in_schema=False,
-             response_model=HealthCheckResponse)
-@router.get("/health_check",
-            include_in_schema=False,
-            response_model=HealthCheckResponse)
-@router.post(f"{config.prefix}/health_check",
-             include_in_schema=False,
-             response_model=HealthCheckResponse)
-@router.get(f"{config.prefix}/health_check",
-            include_in_schema=True,
-            response_model=HealthCheckResponse)
-@router.head("/.*", include_in_schema=False)
-def health_check():  # NOQA
+@router.get(f"{config.prefix}/health_check", include_in_schema=True)
+async def health_check():  # NOQA
     """健康检查接口
     """
     return JSONResponse(content={
