@@ -12,15 +12,16 @@ Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员
 ```
 docker run -d \
     --net=host \
-    --name flyer_bench1 \
+    --name flyer_bench \
     --cpus 1 \
     -e flyer_port=8888 \
     -e flyer_workers=1 \
+    -e flyer_threads=5 \
     -e flyer_log_level=error \
-    -e flyer_debug=0 \
     -e flyer_reload=0 \
-    -e flyer_preload=0 \
     -e flyer_access_log=0 \
+    -e flyer_preload=0 \
+    -e flyer_worker_connections=10000 \
     -e flyer_threads=1 jagerzhang/flyer:v1.1
 ```
 ### 启动压测
