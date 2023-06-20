@@ -12,10 +12,18 @@ def check_health():  # NOQA
     return JSONResponse(status_code=200)
 
 
-@router.head("/health_check", include_in_schema=False)
-@router.post("/health_check", include_in_schema=False)
-@router.get("/health_check", include_in_schema=False)
-@router.post(f"{config.prefix}/health_check", include_in_schema=False)
+@router.head("/health_check",
+             include_in_schema=False,
+             response_model=HealthCheckResponse)
+@router.post("/health_check",
+             include_in_schema=False,
+             response_model=HealthCheckResponse)
+@router.get("/health_check",
+            include_in_schema=False,
+            response_model=HealthCheckResponse)
+@router.post(f"{config.prefix}/health_check",
+             include_in_schema=False,
+             response_model=HealthCheckResponse)
 @router.get(f"{config.prefix}/health_check",
             include_in_schema=True,
             response_model=HealthCheckResponse)
