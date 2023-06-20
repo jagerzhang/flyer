@@ -7,13 +7,15 @@ from api import settings as config
 router = APIRouter()
 
 
-@router.get(f"{config.prefix}/health_check", include_in_schema=True)
+@router.get(f"{config.prefix}/health_check",
+            include_in_schema=True,
+            response_model=HealthCheckResponse)
 async def health_check():  # NOQA
     """健康检查接口
     """
     return JSONResponse(content={
-        "retInfo": "success",
-        "retCode": config.ierror.IS_SUCCESS
+        "msg": "success",
+        "code": config.ierror.IS_SUCCESS
     })
 
 
