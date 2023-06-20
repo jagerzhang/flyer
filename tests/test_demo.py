@@ -4,6 +4,7 @@
 """
 import os
 import sys
+
 abs_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(abs_path)
 from api import create_app
@@ -18,8 +19,8 @@ def test():
     response = client.post(prefix + "/demo", json={"msgContent": "Flyer"})
     print(response.json())
     assert response.status_code == 200
-    assert response.json().get("retCode") == 200
-    assert response.json().get("retInfo") == "Hello Flyer!"
+    assert response.json().get("code") == 200
+    assert response.json().get("msg") == "Hello Flyer!"
 
 
 if __name__ == '__main__':

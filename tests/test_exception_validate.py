@@ -19,7 +19,7 @@ def test():
     print(response.json())
     assert response.status_code == 200
     assert response.json().get(
-        "retCode") == ierror.VALIDATE_REQUEST_PARAMS_ERROR
+        "code") == ierror.VALIDATE_REQUEST_PARAMS_ERROR
 
 
 if __name__ == '__main__':

@@ -8,17 +8,19 @@ router = APIRouter()
 
 
 @router.head("/", include_in_schema=False)
-async def check_health():  # NOQA
+def check_health():  # NOQA
     return JSONResponse(status_code=200)
 
 
 @router.head("/health_check", include_in_schema=False)
 @router.post("/health_check", include_in_schema=False)
-@router.get("/health_check", response_model=HealthCheckResponse)
+@router.get("/health_check", include_in_schema=False)
 @router.post(f"{config.prefix}/health_check", include_in_schema=False)
-@router.get(f"{config.prefix}/health_check", include_in_schema=False)
+@router.get(f"{config.prefix}/health_check",
+            include_in_schema=True,
+            response_model=HealthCheckResponse)
 @router.head("/.*", include_in_schema=False)
-async def health_check():  # NOQA
+def health_check():  # NOQA
     """健康检查接口
     """
     return JSONResponse(content={

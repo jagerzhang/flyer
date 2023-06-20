@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export flyer_release_date="RELEASE_DATE"
 

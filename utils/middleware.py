@@ -15,6 +15,7 @@ from api import settings as config
 class RouteMiddleWare(APIRoute):
     """路由中间件：记录请求日志和耗时等公共处理逻辑
     """
+
     async def get_request_body(self, request):
         """获取请求参数
         """
@@ -49,16 +50,15 @@ class RouteMiddleWare(APIRoute):
         if isinstance(response_body, dict) and isinstance(request_body, dict):
             response_body.update(request_body)
 
-            if "retCode" not in response_body:
-                response_body["retCode"] = response.status_code
+            if "code" not in response_body:
+                response_body["code"] = response.status_code
 
-            if "retInfo" not in response_body:
-                response_body["retInfo"] = str(
-                    response_body.get("response_str"))
+            if "msg" not in response_body:
+                response_body["msg"] = str(response_body.get("response_str"))
 
         response_body.update(kwargs)
 
-        if eval(config.env.get("flyer_access_log_json", "True")):
+        if int(config.env.get("flyer_access_log_json", "1")):
             config.logger.info(json.dumps(response_body))
 
     def get_route_handler(self):
@@ -101,9 +101,9 @@ class RouteMiddleWare(APIRoute):
                 ret_info = f"请求参数错误，请检查您的请求字段属性是否正确，如有疑问请联系管理员，报错信息: {error}"
                 error_str = f"请求参数错误，X-Request-ID: {request_id}，报错信息: {error}"
                 result = {
-                    "retCode": config.ierror.VALIDATE_REQUEST_PARAMS_ERROR,
+                    "code": config.ierror.VALIDATE_REQUEST_PARAMS_ERROR,
                     "clientIp": client_ip,
-                    "retInfo": ret_info,
+                    "msg": ret_info,
                     "logId": request_id
                 }
 
@@ -112,9 +112,9 @@ class RouteMiddleWare(APIRoute):
                 ret_info = f"响应参数错误，可能是依赖的服务返回异常，请稍后重试或联系管理员，报错信息: {error}"
                 error_str = f"响应参数错误，X-Request-ID: {request_id}，报错信息: {error}"
                 result = {
-                    "retCode": config.ierror.VALIDATE_RESPONSE_CONTENT_ERROR,
+                    "code": config.ierror.VALIDATE_RESPONSE_CONTENT_ERROR,
                     "clientIp": client_ip,
-                    "retInfo": ret_info,
+                    "msg": ret_info,
                     "logId": request_id
                 }
 
@@ -131,9 +131,9 @@ class RouteMiddleWare(APIRoute):
                     error_str = f"发生内部错误，X-Request-ID: {request_id}，报错信息: {traceback.format_exc()}"
 
                 result = {
-                    "retCode": ret_code,
+                    "code": ret_code,
                     "clientIp": client_ip,
-                    "retInfo": ret_info,
+                    "msg": ret_info,
                     "logId": request_id
                 }
 

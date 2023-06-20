@@ -15,7 +15,7 @@ def test():
     response = client.get("/health_check")
     print(response.text)
     assert response.status_code == 200
-    assert response.json().get("retCode") == 200
+    assert response.json().get("code") == 200
 
 
 if __name__ == '__main__':

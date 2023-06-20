@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 test -f env_ext.sh && \
     source env_ext.sh
 
@@ -41,21 +41,21 @@ export THREADS=${flyer_threads:-${THREADS}}
 export KEEPALIVE=${flyer_keepalive:-5}
 export LOG_LEVEL=${flyer_log_level:-info}
 
-if [[ "${flyer_access_log}" == "True" ]];then
+if [[ "${flyer_access_log}" == "1" ]];then
     # 访问日志默认记录到容器标准输出
     export ACCESS_LOGFILE=${flyer_access_logfile:--}
     export ACCESS_CONFIG="--access-logfile=${ACCESS_LOGFILE}"
 fi
 
-if [[ "${flyer_reload}" == "True" ]];then
+if [[ "${flyer_reload}" == "1" ]];then
     export RELOAD="--reload"
 fi
 
-if [[ "${flyer_preload}" == "True" ]];then
+if [[ "${flyer_preload}" == "1" ]];then
     export PRELOAD="--preload"
 fi
 
-if [[ "${flyer_enable_max_requests}" == "True" ]];then
+if [[ "${flyer_enable_max_requests}" == "1" ]];then
     export MAX_REQUESTS="--max-requests ${max_requests}"
     export MAX_REQUESTS_JITTER="--max-requests-jitter ${max_requests_jitter}"
 fi

@@ -52,6 +52,7 @@ def create_service(app: FastAPI):
     :param app:
     :return:
     """
+
     @app.on_event("startup")
     def set_default_executor():  # pylint: disable=unused-variable
         max_threads = int(os.environ.get("THREADS", 5))
@@ -66,6 +67,7 @@ def register_exception(app: FastAPI):  # NOQA
     :param app:
     :return:
     """
+
     @app.exception_handler(Exception)
     def __all_exception_handler(request: Request, exc: Exception):  # noqa
         request_id = str(uuid.uuid4())
@@ -74,12 +76,12 @@ X-Request-ID:{request_id}\n{traceback.format_exc()}"
 
         client_ip = config.common_func.get_client_ip(request)
         result = {
-            "retCode": config.ierror.INNER_SELF_ERROR,
-            "retInfo": error_str,
+            "code": config.ierror.INNER_SELF_ERROR,
+            "msg": error_str,
             "clientIp": client_ip,
             "logId": request_id
         }
-        result["retInfo"] = "服务出现异常，可能是您的请求协议JSON格式错误或者飞鸽依赖的服务返回异常，请稍后重试或\
+        result["msg"] = "服务出现异常，可能是您的请求协议JSON格式错误或者飞鸽依赖的服务返回异常，请稍后重试或\
 联系管理员，报错信息: {}".format(traceback.format_exc(limit=0, chain=False))
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

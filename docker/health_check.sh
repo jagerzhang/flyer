@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd $(cd $(dirname $0) && pwd)
 
 if [[ $(curl -sSL -o /dev/null -w "%{http_code}" http://127.0.0.1:${flyer_port:-8080}/health_check) -ne 200 ]];then

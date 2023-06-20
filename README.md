@@ -12,20 +12,21 @@ Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员
 ```
 docker run -d \
     --net=host \
-    --name flyer_bench \
+    --name flyer_bench1 \
     --cpus 1 \
     -e flyer_port=8888 \
     -e flyer_workers=1 \
     -e flyer_log_level=error \
-    -e flyer_debug=False \
-    -e flyer_reload=False \
-    -e flyer_preload=True \
-    -e flyer_threads=1 jagerzhang/flyer:v1.0
+    -e flyer_debug=0 \
+    -e flyer_reload=0 \
+    -e flyer_preload=0 \
+    -e flyer_access_log=0 \
+    -e flyer_threads=1 open_flyer:dev
 ```
 ### 启动压测
 ```shell
-[root@localhost ~]# ./wrk -c 800 -t 10 http://127.0.0.1:8080/health_check
-Running 10s test @ http://127.0.0.1:8080/health_check/health_check
+[root@localhost ~]# ./wrk -c 800 -t 10 http://127.0.0.1:8888/health_check
+Running 10s test @ http://127.0.0.1:8888/health_check/health_check
   10 threads and 800 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
     Latency    87.78ms   19.46ms 430.79ms   90.17%
@@ -152,7 +153,7 @@ Flyer 支持通过环境变量来修改各种配置。
 - `flyer_port`：接口绑定端口，默认为 8080
 - `flyer_base_url`：服务地址前缀，默认为 /flyer
 - `flyer_version`：服务版本，当前为 v1
-- `flyer_reload`：接口热加载，用于开发环境，默认为 True
+- `flyer_reload`：接口热加载，用于开发环境，默认为 1
 - `flyer_workers`：工作进程数量，默认为 1
 - `flyer_threads`：工作线程数量，默认为 5
 - `flyer_worker_connections`：最大客户端并发数量，默认为1000
@@ -163,7 +164,7 @@ Flyer 支持通过环境变量来修改各种配置。
 - `flyer_graceful_timeout`：优雅退出时间，默认为10，收到重启信号后，将等待指定时长才（或强制）退出
 - `flyer_keepalive`：在keep-alive连接上等待请求的秒数，默认为5
 - `flyer_log_level`：定义日志级别，debug/info/warn/error，默认为 info
-- `flyer_access_log`：是否记录请求日志，True/False，默认为 True
+- `flyer_access_log`：是否记录请求日志，1/0，默认为 1
 - `flyer_access_logfile`：定义请求日志文件的位置，默认为-，即输出到容器标准输出
 
 注：更多gunicorn参数可以通过传参给`/run.sh`来覆盖或追加。

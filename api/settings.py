@@ -10,13 +10,25 @@ from os import environ as env
 from utils.common import CommonFunc as common_func  # NOQA
 # 引入智研上报方法
 from utils.logger import log_init
-# 加强版 requests，支持异常重试、日志
-from utils.http_requests import requests  # pylint: disable=unused-import
+# 增强版 requests，支持异常重试、日志
+from utils.http_requests import Requests  # pylint: disable=unused-import
+# 增强版异步requests，支持异常重试、日志
+from utils.http_requests import Requests as AsyncRequests  # pylint: disable=unused-import
 # 全局错误码
 from utils import ierror  # pylint: disable=unused-import
 
 # 主机 IP 变量
 host_ip = common_func.get_host_ip()
+
+# 默认的HTTP重试配置
+DEFAULT_RETRY_CONFIG = {
+    "stop_max_attempt_number": 3,  # 最大重试次数
+    "stop_max_delay": 20,  # 最大运行时长
+    "wait_exponential_multiplier": 500,  # 重试等待步进时间 500ms、1s、2s、4s...
+    "wait_exponential_max": 10000  # 最大步进 10s
+}
+requests = Requests(**DEFAULT_RETRY_CONFIG)
+async_requests = AsyncRequests(**DEFAULT_RETRY_CONFIG)
 
 # 日志配置
 console_log_level = env.get("flyer_console_log_level", "info").upper()
