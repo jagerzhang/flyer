@@ -1,5 +1,7 @@
 ## Flyer: 轻量级 API 开发框架
 
+## 已推出全新 SDK 版本，欢迎使用：[FastFlyer](https://github.com/jagerzhang/FastFlyer)
+
 ## 项目介绍
 Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员快速开发运维业务接口。
 
