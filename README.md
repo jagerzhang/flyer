@@ -2,6 +2,8 @@
 
 ## 已推出全新 SDK 版本，欢迎使用：[FastFlyer](https://github.com/jagerzhang/FastFlyer)
 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fjagerzhang%2Fflyer&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 ## 项目介绍
 Flyer 是基于 FastAPI 设计的轻量级 API 开发框架，帮助运维人员快速开发运维业务接口。
 
